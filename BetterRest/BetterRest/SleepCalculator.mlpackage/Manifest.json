@@ -1,0 +1,24 @@
+{
+    "fileFormatVersion": "1.0.0",
+    "itemInfoEntries": {
+        "DAEEAAF6-CE09-4B15-80EC-B5272F27FAF4": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Specification",
+            "name": "BetterRest.mlmodel",
+            "path": "com.apple.CoreML/BetterRest.mlmodel"
+        },
+        "FBAC03A7-66A9-4A03-BE81-E168790AECD0": {
+            "author": "com.apple.CoreML",
+            "description": "External Metadata Overlay",
+            "name": "Metadata.json",
+            "path": "com.apple.CoreML/Metadata.json"
+        },
+        "FF427FE2-F1E6-427D-A948-494536267E8D": {
+            "author": "com.apple.CoreML",
+            "description": "External FeatureDescription Overlay",
+            "name": "FeatureDescriptions.json",
+            "path": "com.apple.CoreML/FeatureDescriptions.json"
+        }
+    },
+    "rootModelIdentifier": "DAEEAAF6-CE09-4B15-80EC-B5272F27FAF4"
+}
