@@ -13,6 +13,9 @@ struct ContentView: View {
     @State private var rootWord = ""
     @State private var newWord = ""
     
+    // score
+    @State private var score = 0
+    
     // alert
     @State private var errorTitle = ""
     @State private var errorMessage = ""
@@ -21,6 +24,10 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section{
+                    Text("Current score: \(score)")
+                }
+                
                 Section {
                     TextField("Enter your word", text: $newWord)
                         .onSubmit(addNewWord)
@@ -38,6 +45,9 @@ struct ContentView: View {
                 }
             }
             .navigationTitle(rootWord)
+            .toolbar {
+                Button("Change word", action: startGame)
+            }
         }
         .onAppear(perform: startGame)
         .alert(errorTitle, isPresented: $showingError) {
@@ -70,15 +80,26 @@ struct ContentView: View {
             return
         }
         
+        guard isLong(word: answer) else {
+            wordError(title: "Word is too short", message: "You can't insert a word with less than 3 letters!")
+            return
+        }
+        
         // append at the beginning and not end,
         // because we want it as top of the list
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
         newWord = ""
+        score += answer.count
     }
     
     func startGame() {
+        // reset score
+        score = 0
+        // reset used words
+        usedWords = []
+        
         // find the URL for start.txt in our app bundle
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             // load start.txt into a string
@@ -99,7 +120,10 @@ struct ContentView: View {
     }
     
     func isOriginal(word: String) -> Bool {
-        !usedWords.contains(word)
+        if usedWords.contains(word) || word == rootWord {
+            return false
+        }
+        return true
     }
     
     func isPossible(word: String) -> Bool {
@@ -122,6 +146,13 @@ struct ContentView: View {
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
 
         return misspelledRange.location == NSNotFound
+    }
+    
+    func isLong(word: String) -> Bool {
+        if word.count < 3 {
+            return false
+        }
+        return true
     }
     
     func wordError(title: String, message: String) {
